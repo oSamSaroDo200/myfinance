@@ -10,7 +10,9 @@
 /* tokens loaded from tokens.css */
 
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:15px;min-height:100vh;-webkit-font-smoothing:antialiased;transition:background 0.3s,color 0.3s;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:15px;min-height:100dvh;-webkit-font-smoothing:antialiased;transition:background 0.3s,color 0.3s;overscroll-behavior:contain;}
+/* touch-action on all interactive elements — removes 300ms tap delay */
+button,a,[role="button"],select,input,label{touch-action:manipulation;}
 
 /* ── LAYOUT ── */
 .layout{display:flex;min-height:100vh;}
@@ -70,9 +72,10 @@ main{max-width:1060px;margin:0 auto;padding:24px 22px;}
 .sb-divider{height:1px;background:var(--border);margin:0 0 12px;}
 .sb-nav{display:flex;flex-direction:column;gap:2px;flex:1;}
 .nav-item{
-  padding:9px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;
+  padding:10px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;
   color:var(--muted);cursor:pointer;text-decoration:none;
   display:flex;align-items:center;gap:9px;transition:all 0.15s;
+  min-height:44px;
 }
 .nav-item:hover{background:rgba(232,119,154,0.07);color:var(--text);}
 .nav-item.active{background:var(--accent-glow);color:var(--accent);}
@@ -84,9 +87,10 @@ main{max-width:1060px;margin:0 auto;padding:24px 22px;}
 
 /* ── BUTTONS ── */
 .btn{
-  padding:7px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;
+  padding:10px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;
   font-family:var(--font-sans);font-size:13px;font-weight:600;
   transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+  min-height:44px;
 }
 .btn-primary{background:var(--accent);color:#fff;box-shadow:0 0 0 0 rgba(232,119,154,0.3);}
 .btn-primary:hover{background:var(--accent2);box-shadow:0 4px 14px rgba(232,119,154,0.45);transform:translateY(-1px);}
@@ -117,22 +121,37 @@ main{max-width:1060px;margin:0 auto;padding:24px 22px;}
   margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;
 }
 
-/* ── STAT STRIP ── */
-.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+/* ── BENTO GRID ── */
+.bento-main{
+  display:grid;
+  grid-template-columns:1.8fr 1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:14px;
+  margin-bottom:16px;
+}
+.bento-hero-cell{grid-column:1;grid-row:1/3;}
+.bento-row2{
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:14px;
+  margin-bottom:16px;
+}
+
+/* ── STAT CARDS ── */
 .stat-card{
   background:var(--surface);border:1px solid var(--border);
   border-radius:var(--radius);padding:15px 16px;
   border-top:2.5px solid transparent;position:relative;overflow:hidden;
-  transition:transform 0.15s,box-shadow 0.15s,background 0.3s;
+  transition:transform 0.18s,box-shadow 0.18s,background 0.3s;
 }
-.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.stat-card:hover{transform:translateY(-3px) scale(1.01);box-shadow:var(--shadow);}
 .stat-card.income{border-top-color:var(--green);}
 .stat-card.expense{border-top-color:var(--red);}
 .stat-card.balance{border-top-color:var(--accent);}
 .stat-card.saving{border-top-color:var(--yellow);}
 .stat-label{font-size:12px;font-weight:600;color:var(--text-secondary);letter-spacing:0px;margin-bottom:7px;display:flex;align-items:center;gap:5px;}
-.stat-value{font-family:var(--font-mono);font-size:22px;font-weight:700;line-height:1;}
-.stat-sub{font-size:12px;color:var(--text-secondary);margin-top:5px;}
+.stat-value{font-family:var(--font-mono);font-size:20px;font-weight:700;line-height:1;}
+.stat-sub{font-size:11px;color:var(--text-secondary);margin-top:5px;}
 .stat-change{font-size:11px;margin-top:4px;font-family:var(--font-mono);}
 .stat-change.up{color:var(--green);}
 .stat-change.dn{color:var(--red);}
@@ -148,15 +167,17 @@ main{max-width:1060px;margin:0 auto;padding:24px 22px;}
 .hero-card{
   background:linear-gradient(135deg,var(--surface) 60%,var(--surface2) 100%);
   border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;height:100%;box-sizing:border-box;
+  transition:transform 0.18s,box-shadow 0.18s,background 0.3s;
 }
+.hero-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
 .hero-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2.5px;
   background:linear-gradient(90deg,var(--accent),var(--accent2),#F4A7B9);
 }
 .hero-card::after{display:none;}
 .hero-label{font-size:12px;font-weight:600;color:var(--text-secondary);letter-spacing:0px;margin-bottom:8px;}
-.hero-amount{font-family:var(--font-mono);font-size:32px;font-weight:700;line-height:1;letter-spacing:-1px;}
+.hero-amount{font-family:var(--font-mono);font-size:36px;font-weight:700;line-height:1;letter-spacing:-1px;}
 .hero-sub{font-size:13px;color:var(--text-secondary);margin-top:6px;}
 .hero-mini-row{display:flex;gap:8px;margin-top:16px;}
 .hero-mini{flex:1;padding:9px 12px;border-radius:var(--radius-sm);text-align:center;font-size:12px;}
@@ -192,45 +213,45 @@ main{max-width:1060px;margin:0 auto;padding:24px 22px;}
 .trend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
 
 /* ── TRANSACTION LIST ── */
-.tx-group{margin-bottom:14px;}
+.tx-group{margin-bottom:16px;}
 .tx-date-header{
-  font-size:12px;font-weight:700;color:var(--text-secondary);
-  padding:5px 0;border-bottom:1px solid var(--border);
-  margin-bottom:6px;display:flex;justify-content:space-between;
+  font-size:11px;font-weight:700;color:var(--text-secondary);letter-spacing:0.5px;text-transform:uppercase;
+  padding:4px 0 6px;border-bottom:1px solid var(--border);
+  margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;
 }
 .tx-item{
-  display:flex;align-items:center;gap:12px;padding:9px 12px;
-  border-radius:var(--radius-sm);transition:background 0.12s;
+  display:flex;align-items:center;gap:11px;padding:10px 12px 10px 14px;
+  border-radius:var(--radius-sm);transition:background 0.12s,border-color 0.12s;
   cursor:pointer;border:1px solid transparent;
+  border-left:3px solid transparent;margin-bottom:2px;
 }
-.tx-item:hover{background:var(--surface2);border-color:var(--border);}
-.tx-icon{
-  width:38px;height:38px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;
-}
+.tx-item.tx-inc{border-left-color:var(--income-dot);}
+.tx-item.tx-exp{border-left-color:var(--expense-dot);}
+.tx-item:hover{background:var(--surface2);border-color:var(--border);border-left-color:inherit;}
 .tx-info{flex:1;min-width:0;}
 .tx-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.tx-cat{font-size:12px;color:var(--text-secondary);}
-.tx-amount{font-family:var(--font-mono);font-size:14px;font-weight:700;flex-shrink:0;}
+.tx-cat{font-size:12px;color:var(--text-secondary);margin-top:1px;}
+.tx-amount{font-family:var(--font-mono);font-size:15px;font-weight:700;flex-shrink:0;}
 .tx-del{
-  opacity:0;transition:opacity 0.12s;
-  background:none;border:none;color:var(--red);
-  cursor:pointer;font-size:14px;padding:4px 5px;border-radius:6px;
+  opacity:0;transition:opacity 0.12s,background 0.12s;
+  background:none;border:none;color:var(--muted);
+  cursor:pointer;padding:5px;border-radius:6px;display:flex;align-items:center;flex-shrink:0;
 }
 .tx-item:hover .tx-del{opacity:1;}
-.tx-del:hover{background:rgba(232,109,109,0.1);}
+.tx-del:hover{background:rgba(232,109,109,0.12);color:var(--red);}
 
 /* ── CAT GRID ── */
 .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
 .cat-card{
   background:var(--surface);border:1px solid var(--border);
   border-radius:var(--radius-sm);padding:13px 15px;
-  transition:border-color 0.15s,transform 0.15s,background 0.3s;
+  border-top:3px solid transparent;
+  transition:border-color 0.15s,transform 0.18s,box-shadow 0.18s,background 0.3s;
 }
-.cat-card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
-.cat-name{font-size:13px;font-weight:600;margin-bottom:5px;color:var(--text);}
-.cat-amount{font-family:var(--font-mono);font-size:17px;font-weight:700;}
-.cat-count{font-size:11px;color:var(--text-secondary);margin-top:2px;}
+.cat-card:hover{border-color:var(--border2);transform:translateY(-2px) scale(1.01);box-shadow:var(--shadow);}
+.cat-name{font-size:12px;font-weight:600;margin-bottom:6px;color:var(--text-secondary);letter-spacing:0.2px;}
+.cat-amount{font-family:var(--font-mono);font-size:18px;font-weight:700;}
+.cat-count{font-size:11px;color:var(--text-secondary);margin-top:3px;}
 
 /* ── SEARCH ── */
 .search-wrap{position:relative;}
@@ -304,9 +325,10 @@ select{appearance:none;cursor:pointer;}
 }
 .bnav-item{
   display:flex;flex-direction:column;align-items:center;gap:3px;
-  flex:1;padding:5px;cursor:pointer;color:var(--muted);
+  flex:1;padding:8px 4px;cursor:pointer;color:var(--muted);
   transition:color 0.15s;font-size:10px;font-weight:600;
   background:none;border:none;font-family:var(--font-sans);
+  min-height:48px;justify-content:center;
 }
 .bnav-item.active{color:var(--accent);}
 .bnav-fab{
@@ -319,26 +341,82 @@ select{appearance:none;cursor:pointer;}
 .bnav-fab:hover{transform:scale(1.08);}
 
 /* ── EMPTY STATE ── */
-.empty{text-align:center;padding:44px 20px;color:var(--muted);}
-.empty-icon{font-size:42px;margin-bottom:12px;opacity:0.5;}
+.empty{text-align:center;padding:48px 20px;color:var(--muted);}
+.empty-icon{margin-bottom:14px;opacity:0.35;}
 .empty-title{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--text);}
+.empty-sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+/* ── TX FILTER CARD ── */
+.filter-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:11px 16px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:space-between;}
+/* ── BUDGET OVERVIEW ── */
+.budget-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+@media(max-width:500px){.budget-overview{grid-template-columns:1fr 1fr;}}
+/* ── WELCOME CARD ── */
+.welcome-card{
+  background:linear-gradient(135deg,var(--accent-glow) 0%,transparent 70%);
+  border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px 24px;text-align:center;margin-bottom:18px;
+  border-top:3px solid var(--accent);
+}
+.welcome-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.welcome-sub{font-size:13px;color:var(--text-secondary);margin-bottom:20px;line-height:1.6;}
 
+/* ── BUDGET CARD DELETE ── */
+.budget-card{position:relative;}
+.budget-del{position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;color:var(--muted2);padding:6px 8px;border-radius:6px;opacity:0;transition:opacity 0.12s,color 0.12s,background 0.12s;line-height:0;}
+.budget-card:hover .budget-del{opacity:1;}
+.budget-del:hover{background:rgba(232,109,109,0.1);color:var(--red);}
+/* ── TX LAYOUT B ── */
+.tx-layout{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:start;}
+.tx-panel{position:sticky;top:66px;}
+/* ── BUDGET LAYOUT C ── */
+.budget-body{display:grid;grid-template-columns:1fr 210px;gap:16px;align-items:start;}
+.budget-donut-sticky{position:sticky;top:66px;}
 /* ── ANIMATIONS ── */
 .fade-in{animation:fadeIn 0.2s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
 /* ── RESPONSIVE ── */
 @media(max-width:820px){
-  .stat-strip{grid-template-columns:1fr 1fr;}
+  .bento-main{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .bento-hero-cell{grid-column:1/3;grid-row:1;}
+  .bento-row2{grid-template-columns:1fr;}
   .cat-grid{grid-template-columns:1fr 1fr;}
-  .dashboard-grid{grid-template-columns:1fr !important;}
-  main{padding:16px 14px 82px;}
+  main{padding:16px 14px calc(80px + env(safe-area-inset-bottom,0px));}
   .bottom-nav{display:flex;}
-  .hero-amount{font-size:26px;}
+  .hero-amount{font-size:28px;}
+  /* iOS: prevent auto-zoom on input focus — need 16px minimum */
+  input[type="text"],input[type="number"],input[type="date"],select,textarea{font-size:16px;}
+  /* filter bar: stack controls below label on narrow screens */
+  .filter-card{flex-direction:column;align-items:stretch;gap:10px;}
+  .filter-card > div:last-child{display:flex;flex-wrap:wrap;gap:8px;}
+  .filter-card input,.filter-card select{flex:1;min-width:100px;}
+  /* budget overview: 2 cols on tablet */
+  .budget-overview{grid-template-columns:1fr 1fr;}
+  /* tx and budget layouts: stack on mobile */
+  .tx-layout{grid-template-columns:1fr;}
+  .tx-panel{position:static;}
+  .budget-body{grid-template-columns:1fr;}
+  .budget-donut-sticky{position:static;}
+  /* compact topbar on mobile */
+  .topbar-add-label{display:none;}
+  /* budget card: always show delete button on touch */
+  .budget-del{opacity:0.55;}
 }
 @media(max-width:500px){
+  .bento-main{grid-template-columns:1fr;}
+  .bento-hero-cell{grid-column:1;}
   .cat-grid{grid-template-columns:1fr;}
   .donut-wrap{flex-direction:column;align-items:flex-start;}
+  .budget-overview{grid-template-columns:1fr 1fr;}
+  .budget-donut-sticky{display:none;}
+  /* modal full-width on small phones */
+  .modal{padding:20px 16px;border-radius:var(--radius) var(--radius) 0 0;}
+  .modal-bg{align-items:flex-end;}
+}
+/* reduced-motion: disable non-essential animations */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}
+  .prog-fill{transition:none;}
 }
 </style>
 </head>
@@ -413,7 +491,7 @@ select{appearance:none;cursor:pointer;}
     </div>
     <button class="btn btn-primary" onclick="openAdd()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-      เพิ่มรายการ
+      <span class="topbar-add-label">เพิ่มรายการ</span>
     </button>
   </div>
 
@@ -422,8 +500,51 @@ select{appearance:none;cursor:pointer;}
     <!-- PAGE: DASHBOARD -->
     <div id="page_dashboard" class="fade-in">
 
-      <!-- Stat Strip -->
-      <div class="stat-strip">
+      <!-- Welcome card (shown only when no data) -->
+      <div id="welcome_card" class="welcome-card" style="display:none;">
+        <div style="margin-bottom:14px;opacity:0.5;">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div class="welcome-title">ยินดีต้อนรับสู่ MyFinance</div>
+        <div class="welcome-sub">เริ่มบันทึกรายรับรายจ่ายของคุณ<br>เพื่อดูสรุปสถานะการเงินที่นี่</div>
+        <button class="btn btn-primary" onclick="openAdd()" style="margin:0 auto;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          เพิ่มรายการแรก
+        </button>
+      </div>
+
+      <!-- Bento Main Grid -->
+      <div class="bento-main">
+
+        <!-- Hero (spans 2 rows) -->
+        <div class="bento-hero-cell">
+          <div class="hero-card">
+            <div class="hero-label">ยอดสุทธิเดือนนี้</div>
+            <div class="hero-amount" id="hero_balance">฿0</div>
+            <div class="hero-sub" id="hero_sub">รายรับ − รายจ่าย</div>
+            <div style="margin-top:14px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-bottom:4px;">
+                <span>ใช้จ่ายไป / รายรับ</span>
+                <span id="hero_pct" style="font-family:var(--font-mono);font-weight:600;color:var(--accent);">0%</span>
+              </div>
+              <div class="prog-bar">
+                <div class="prog-fill" id="hero_prog" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));"></div>
+              </div>
+            </div>
+            <div class="hero-mini-row">
+              <div class="hero-mini inc">
+                <div class="hero-mini-label">รายรับ</div>
+                <div class="hero-mini-val" id="hero_inc" style="color:var(--green);">฿0</div>
+              </div>
+              <div class="hero-mini exp">
+                <div class="hero-mini-label">รายจ่าย</div>
+                <div class="hero-mini-val" id="hero_exp" style="color:var(--red);">฿0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stat Cards — right column, 2 rows -->
         <div class="stat-card income">
           <div class="stat-label">รายรับ</div>
           <div class="stat-value" id="s_income" style="color:var(--green)">฿0</div>
@@ -446,51 +567,25 @@ select{appearance:none;cursor:pointer;}
           <div class="stat-value" id="s_saving" style="color:var(--yellow)">0%</div>
           <div class="stat-sub" id="s_saving_sub">ของรายรับ <span id="cat_mood" style="font-weight:700;"></span></div>
         </div>
+
       </div>
 
-      <!-- Hero + Donut -->
-      <div class="dashboard-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;">
-        <div class="hero-card">
-          <div class="hero-label">ยอดสุทธิเดือนนี้</div>
-          <div class="hero-amount" id="hero_balance">฿0</div>
-          <div class="hero-sub" id="hero_sub">รายรับ − รายจ่าย</div>
-          <div style="margin-top:14px;">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-bottom:4px;">
-              <span>ใช้จ่ายไป / รายรับ</span>
-              <span id="hero_pct" style="font-family:var(--font-mono);font-weight:600;color:var(--accent);">0%</span>
-            </div>
-            <div class="prog-bar">
-              <div class="prog-fill" id="hero_prog" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));"></div>
-            </div>
-          </div>
-          <div class="hero-mini-row">
-            <div class="hero-mini inc">
-              <div class="hero-mini-label">รายรับ</div>
-              <div class="hero-mini-val" id="hero_inc" style="color:var(--green);">฿0</div>
-            </div>
-            <div class="hero-mini exp">
-              <div class="hero-mini-label">รายจ่าย</div>
-              <div class="hero-mini-val" id="hero_exp" style="color:var(--red);">฿0</div>
-            </div>
-          </div>
-        </div>
-
+      <!-- Bento Row 2: Donut + Trend -->
+      <div class="bento-row2">
         <div class="card" style="display:flex;flex-direction:column;">
           <div class="card-title"><span>รายจ่ายแยกหมวด</span></div>
           <div id="donut_wrap" style="flex:1;display:flex;align-items:center;"></div>
         </div>
-      </div>
-
-      <!-- Trend Chart -->
-      <div class="card" style="margin-bottom:18px;">
-        <div class="card-title">
-          <span>แนวโน้ม 6 เดือน</span>
-          <div class="trend-legend">
-            <div class="trend-leg"><div class="trend-dot" style="background:var(--green);"></div>รายรับ</div>
-            <div class="trend-leg"><div class="trend-dot" style="background:var(--red);"></div>รายจ่าย</div>
+        <div class="card">
+          <div class="card-title">
+            <span>แนวโน้ม 6 เดือน</span>
+            <div class="trend-legend">
+              <div class="trend-leg"><div class="trend-dot" style="background:var(--green);"></div>รายรับ</div>
+              <div class="trend-leg"><div class="trend-dot" style="background:var(--red);"></div>รายจ่าย</div>
+            </div>
           </div>
+          <div id="trend_chart"></div>
         </div>
-        <div id="trend_chart"></div>
       </div>
 
       <div class="sec-label" id="inc_cat_label" style="display:none;">หมวดหมู่รายรับ</div>
@@ -504,30 +599,48 @@ select{appearance:none;cursor:pointer;}
 
     <!-- PAGE: TRANSACTIONS -->
     <div id="page_transactions" style="display:none;" class="fade-in">
-      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div style="font-size:14px;font-weight:600;" id="tx_count_label">—</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <div class="search-wrap">
-            <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            <input type="text" id="filter_search" class="search-inp" placeholder="ค้นหา..." oninput="renderTransactions()" style="width:140px;font-size:12px;padding:6px 10px;min-height:36px;">
+      <div class="tx-layout">
+        <!-- LEFT: summary + filter panel -->
+        <div class="tx-panel">
+          <div id="tx_summary_strip" style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+          <div class="card" style="padding:14px 16px;">
+            <div class="card-title" style="margin-bottom:12px;">กรองรายการ</div>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <div class="search-wrap">
+                <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="filter_search" class="search-inp" placeholder="ค้นหา..." oninput="renderTransactions()" style="width:100%;font-size:13px;padding:8px 10px;min-height:44px;">
+              </div>
+              <select id="filter_type" onchange="renderTransactions()" style="width:100%;font-size:13px;padding:8px 10px;min-height:44px;">
+                <option value="all">ทั้งหมด</option>
+                <option value="income">รายรับ</option>
+                <option value="expense">รายจ่าย</option>
+              </select>
+              <select id="filter_cat" onchange="renderTransactions()" style="width:100%;font-size:13px;padding:8px 10px;min-height:44px;">
+                <option value="all">ทุกหมวด</option>
+              </select>
+            </div>
           </div>
-          <select id="filter_type" onchange="renderTransactions()" style="width:auto;font-size:12px;padding:6px 10px;min-height:36px;">
-            <option value="all">ทั้งหมด</option>
-            <option value="income">รายรับ</option>
-            <option value="expense">รายจ่าย</option>
-          </select>
-          <select id="filter_cat" onchange="renderTransactions()" style="width:auto;font-size:12px;padding:6px 10px;min-height:36px;">
-            <option value="all">ทุกหมวด</option>
-          </select>
+        </div>
+        <!-- RIGHT: count + list -->
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;" id="tx_count_label">—</div>
+          <div id="tx_list"></div>
         </div>
       </div>
-      <div id="tx_list"></div>
     </div>
 
     <!-- PAGE: BUDGET -->
     <div id="page_budget" style="display:none;" class="fade-in">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:18px;">ตั้งงบประมาณรายจ่ายต่อเดือน — คลิกตัวเลขเพื่อแก้ไขได้เลย</p>
-      <div id="budget_list" style="display:flex;flex-direction:column;gap:12px;"></div>
+      <div id="budget_overview" class="budget-overview"></div>
+      <div class="budget-body">
+        <div id="budget_list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        <div class="budget-donut-sticky">
+          <div class="card" style="padding:16px 18px;">
+            <div class="card-title">สัดส่วนรายจ่าย</div>
+            <div id="budget_donut"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -687,6 +800,10 @@ function saveCustomCats(){localStorage.setItem(KEY_CUSTOM_CATS,JSON.stringify(CU
 function saveCatOverrides(){localStorage.setItem(KEY_CAT_OVERRIDES,JSON.stringify(CAT_OVERRIDES));}
 let BUDGETS=JSON.parse(localStorage.getItem(KEY_BUDGETS)||'null')||
   {food:5000,travel:3000,housing:8000,health:2000,shop:3000,entertain:2000,bill:2000,beauty:1500,edu:1000,other_ex:1000};
+let BUDGET_HIDDEN=JSON.parse(localStorage.getItem('mf_budget_hidden')||'[]');
+function saveBudgetHidden(){localStorage.setItem('mf_budget_hidden',JSON.stringify(BUDGET_HIDDEN));}
+function hideBudgetCat(id){if(!BUDGET_HIDDEN.includes(id))BUDGET_HIDDEN.push(id);saveBudgetHidden();renderAll();showToast('ซ่อนหมวดหมู่แล้ว','inf');}
+function restoreBudgetCat(id){BUDGET_HIDDEN=BUDGET_HIDDEN.filter(x=>x!==id);saveBudgetHidden();renderAll();showToast('เพิ่มหมวดหมู่แล้ว','ok');}
 
 const MTH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 let data=JSON.parse(localStorage.getItem(KEY_DATA)||'[]');
@@ -758,6 +875,7 @@ function renderAll(){
   incItems.forEach(t=>{incCatTot[t.cat]=(incCatTot[t.cat]||0)+t.amount;});
 
   if(_page==='dashboard'){
+    const wc=el('welcome_card');if(wc)wc.style.display=md.length===0?'block':'none';
     renderDonut(catTot,exp);
     renderTrend();
     renderCatGrid(catTot,exItems,incCatTot,incItems);
@@ -860,6 +978,7 @@ function renderCatGrid(catTot,exItems,incCatTot={},incItems=[]){
       const amt=incCatTot[cat.id]||0;if(!amt)return;
       const cnt=incItems.filter(t=>t.cat===cat.id).length;
       const div=document.createElement('div');div.className='cat-card';
+      div.style.borderTopColor=cat.color;
       div.innerHTML=`
         <div class="cat-name">${esc(cat.name)}</div>
         <div class="cat-amount" style="color:var(--income-fg);">+฿${fmt(amt)}</div>
@@ -874,11 +993,12 @@ function renderCatGrid(catTot,exItems,incCatTot={},incItems=[]){
     const budget=BUDGETS[cat.id]||0;
     const bpct=budget>0?Math.min(100,Math.round((amt/budget)*100)):0;
     const div=document.createElement('div');div.className='cat-card';
+    div.style.borderTopColor=cat.color;
     div.innerHTML=`
       <div class="cat-name">${esc(cat.name)}</div>
       <div class="cat-amount" style="color:var(--expense-fg);">−฿${fmt(amt)}</div>
       <div class="cat-count">${exItems.filter(t=>t.cat===cat.id).length} รายการ${budget?` · งบ ฿${fmt(budget)}`:''}</div>
-      ${budget?`<div class="prog-bar" style="margin-top:8px;"><div class="prog-fill" style="width:${bpct}%;background:${bpct>90?'var(--red)':bpct>70?'var(--yellow)':'var(--accent)'};"></div></div><div style="font-size:11px;color:${bpct>90?'var(--red)':bpct>70?'var(--yellow)':'var(--text-secondary)'};margin-top:3px;font-weight:500;">${bpct}% ของงบ</div>`:''}`;
+      ${budget?`<div class="prog-bar" style="margin-top:8px;"><div class="prog-fill" style="width:${bpct}%;background:${bpct>90?'var(--red)':bpct>70?'var(--yellow)':cat.color};"></div></div><div style="font-size:11px;color:${bpct>90?'var(--red)':bpct>70?'var(--yellow)':'var(--text-secondary)'};margin-top:3px;font-weight:500;">${bpct}% ของงบ</div>`:''}`;
     cg.appendChild(div);
   });
   if(!cg.innerHTML)cg.innerHTML='<div style="color:var(--muted);font-size:13px;grid-column:span 3;padding:12px 0;">ยังไม่มีรายจ่ายเดือนนี้</div>';
@@ -899,13 +1019,35 @@ function renderTransactions(){
   if(fQ)items=items.filter(t=>t.name.toLowerCase().includes(fQ)||(t.note||'').toLowerCase().includes(fQ)||getCat(t.cat).name.includes(fQ));
   items.sort((a,b)=>b.date.localeCompare(a.date));
   el('tx_count_label').textContent=`${items.length} รายการ`;
+  const tInc=items.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const tExp=items.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const tBal=tInc-tExp;
+  el('tx_summary_strip').innerHTML=`
+    <div class="stat-card income" style="padding:12px 14px;">
+      <div class="stat-label">รายรับ</div>
+      <div class="stat-value" style="color:var(--green);font-size:17px;">฿${fmt(tInc)}</div>
+      <div class="stat-sub">${items.filter(t=>t.type==='income').length} รายการ</div>
+    </div>
+    <div class="stat-card expense" style="padding:12px 14px;">
+      <div class="stat-label">รายจ่าย</div>
+      <div class="stat-value" style="color:var(--red);font-size:17px;">฿${fmt(tExp)}</div>
+      <div class="stat-sub">${items.filter(t=>t.type==='expense').length} รายการ</div>
+    </div>
+    <div class="stat-card balance" style="padding:12px 14px;">
+      <div class="stat-label">คงเหลือ</div>
+      <div class="stat-value" style="color:${tBal>=0?'var(--accent)':'var(--red)'};font-size:17px;">${tBal>=0?'':'−'}฿${fmt(Math.abs(tBal))}</div>
+    </div>`;
   renderTxList(items,el('tx_list'));
 }
 
 function renderTxList(items,container){
   container.innerHTML='';
   if(!items.length){
-    container.innerHTML=`<div class="empty"><div class="empty-title">ยังไม่มีรายการ</div><div style="font-size:13px;color:var(--muted);">กดปุ่ม + เพื่อเริ่มบันทึก</div></div>`;
+    container.innerHTML=`<div class="empty">
+      <div class="empty-icon"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M7 15h.01"/><path d="M11 15h2"/></svg></div>
+      <div class="empty-title">ยังไม่มีรายการ</div>
+      <div class="empty-sub">กดปุ่ม + เพื่อเริ่มบันทึกรายรับรายจ่าย</div>
+    </div>`;
     return;
   }
   const groups={};
@@ -919,18 +1061,18 @@ function renderTxList(items,container){
     grp.innerHTML=`<div class="tx-date-header"><span>${lbl}</span><span style="font-family:var(--font-mono);color:${dayTot>=0?'var(--green)':'var(--red)'};">${dayTot>=0?'+':''}฿${fmt(Math.abs(dayTot))}</span></div>`;
     txs.forEach(t=>{
       const cat=getCat(t.cat);
-      const item=document.createElement('div');item.className='tx-item';
+      const item=document.createElement('div');
       const isInc=t.type==='income';
+      item.className='tx-item '+(isInc?'tx-inc':'tx-exp');
       item.style.background=isInc?'var(--income-bg)':'var(--expense-bg)';
       item.innerHTML=`
-        <div style="width:7px;height:7px;border-radius:50%;background:${isInc?'var(--income-dot)':'var(--expense-dot)'};flex-shrink:0;margin-top:7px;"></div>
         <div class="tx-info">
           <div class="tx-name">${esc(t.name)}</div>
           <div class="tx-cat">${esc(cat.name)}${t.note?' · '+esc(t.note):''}</div>
         </div>
         <div class="tx-amount" style="color:${isInc?'var(--income-fg)':'var(--expense-fg)'};">${isInc?'+':'−'}฿${fmt(t.amount)}</div>
-        <button class="tx-del">✕</button>`;
-      item.querySelector('.tx-del').addEventListener('click',()=>confirmDel(t.id,t.name,t.amount));
+        <button class="tx-del" title="ลบ"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>`;
+      item.querySelector('.tx-del').addEventListener('click',e=>{e.stopPropagation();confirmDel(t.id,t.name,t.amount);});
       grp.appendChild(item);
     });
     container.appendChild(grp);
@@ -940,33 +1082,59 @@ function renderTxList(items,container){
 // ── BUDGET ──
 function renderBudget(catTot){
   const bl=el('budget_list');bl.innerHTML='';
-  allExpense().forEach(cat=>{
+  const visibleCats=allExpense().filter(c=>!BUDGET_HIDDEN.includes(c.id));
+  const hiddenCats=allExpense().filter(c=>BUDGET_HIDDEN.includes(c.id));
+  const totalBudget=visibleCats.reduce((s,c)=>s+(BUDGETS[c.id]||0),0);
+  const totalSpent=visibleCats.reduce((s,c)=>s+(catTot[c.id]||0),0);
+  const totalPct=totalBudget>0?Math.min(100,Math.round((totalSpent/totalBudget)*100)):0;
+  const totalOver=totalSpent>totalBudget&&totalBudget>0;
+  const ov=el('budget_overview');
+  ov.innerHTML=`
+    <div class="stat-card balance" style="padding:13px 15px;">
+      <div class="stat-label">งบรวม/เดือน</div>
+      <div class="stat-value" style="color:var(--accent);font-size:18px;">${totalBudget>0?'฿'+fmt(totalBudget):'—'}</div>
+      <div class="stat-sub">ที่ตั้งไว้</div>
+    </div>
+    <div class="stat-card expense" style="padding:13px 15px;">
+      <div class="stat-label">ใช้ไปแล้ว</div>
+      <div class="stat-value" style="color:${totalOver?'var(--red)':'var(--text)'};font-size:18px;">฿${fmt(totalSpent)}</div>
+      <div class="stat-sub">${totalBudget>0?totalPct+'% ของงบ':'เดือนนี้'}</div>
+    </div>
+    <div class="stat-card saving" style="padding:13px 15px;">
+      <div class="stat-label">คงเหลือ</div>
+      <div class="stat-value" style="color:${totalOver?'var(--red)':'var(--green)'};font-size:18px;">${totalBudget>0?(totalOver?'−':'')+'฿'+fmt(Math.abs(totalBudget-totalSpent)):'—'}</div>
+      <div class="stat-sub">${totalOver?'เกินงบ':'จากงบที่ตั้ง'}</div>
+    </div>`;
+  visibleCats.forEach(cat=>{
     const budget=BUDGETS[cat.id]||0,spent=catTot[cat.id]||0;
     const pct=budget>0?Math.min(100,Math.round((spent/budget)*100)):0;
     const over=spent>budget&&budget>0;
     const moodTxt=over?'เกิน':pct>70?'ระวัง':'ดี';
     const moodColor=over?'var(--red)':pct>70?'var(--yellow)':'var(--green)';
-    const div=document.createElement('div');div.className='card';div.style.padding='14px 18px';
+    const div=document.createElement('div');div.className='card budget-card';div.style.padding='14px 18px';
     div.innerHTML=`
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="background:${cat.color}20;width:8px;height:34px;border-radius:4px;display:block;flex-shrink:0;"></span>
-          <div>
-            <div style="font-weight:600;font-size:14px;">${cat.name}</div>
-            <div style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;margin-top:2px;">
-              งบ <input type="number" class="budget-inp" value="${budget}" data-cat="${cat.id}" min="0"
-                style="width:72px;font-size:11px;padding:2px 6px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font-mono);min-height:unset;"> ฿/เดือน
+      <button class="budget-del" onclick="hideBudgetCat('${cat.id}')" title="ซ่อนหมวดนี้" aria-label="ซ่อน ${esc(cat.name)}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div style="display:flex;align-items:stretch;gap:12px;">
+        <div style="width:4px;border-radius:4px;background:${cat.color};flex-shrink:0;min-height:48px;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
+            <div>
+              <div style="font-weight:700;font-size:14px;color:var(--text);">${esc(cat.name)}</div>
+              <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;display:flex;align-items:center;gap:4px;">
+                งบ <input type="number" class="budget-inp" value="${budget}" data-cat="${cat.id}" min="0"
+                  style="width:70px;font-size:11px;padding:2px 6px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font-mono);min-height:unset;"> ฿/เดือน
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;padding-right:4px;">
+              <div style="font-size:10px;font-weight:700;color:${moodColor};letter-spacing:0.3px;text-transform:uppercase;margin-bottom:3px;">${moodTxt}</div>
+              <div style="font-family:var(--font-mono);font-size:17px;font-weight:700;color:${over?'var(--red)':spent>0?'var(--text)':'var(--muted)'};">฿${fmt(spent)}</div>
+              <div style="font-size:10px;color:${over?'var(--red)':'var(--text-secondary)'};">${over?'เกิน ฿'+fmt(spent-budget):budget>0?'เหลือ ฿'+fmt(budget-spent):''}</div>
             </div>
           </div>
+          ${budget>0?`<div class="prog-bar" style="height:6px;"><div class="prog-fill" style="width:${pct}%;background:${pct>90?'var(--red)':pct>70?'var(--yellow)':cat.color};"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary);margin-top:3px;"><span>${pct}%</span><span>฿${fmt(budget)}</span></div>`
+            :'<div style="font-size:12px;color:var(--muted2);margin-top:4px;">ตั้งงบเพื่อติดตามการใช้จ่าย</div>'}
         </div>
-        <div style="text-align:right;">
-          <div style="font-size:11px;font-weight:700;color:${moodColor};margin-bottom:4px;">${moodTxt}</div>
-          <div style="font-family:var(--font-mono);font-size:15px;font-weight:700;color:${over?'var(--red)':spent>0?'var(--text)':'var(--muted)'};">฿${fmt(spent)}</div>
-          <div style="font-size:10px;color:${over?'var(--red)':'var(--muted)'};">${over?'เกิน ฿'+fmt(spent-budget):budget>0?'เหลือ ฿'+fmt(budget-spent):''}</div>
-        </div>
-      </div>
-      ${budget>0?`<div class="prog-bar" style="height:7px;"><div class="prog-fill" style="width:${pct}%;background:${pct>90?'var(--red)':pct>70?'var(--yellow)':cat.color};border-radius:4px;"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:3px;"><span>${pct}%</span><span>100%</span></div>`
-        :'<div style="font-size:12px;color:var(--muted2);margin-top:4px;">ตั้งงบเพื่อติดตามการใช้จ่าย</div>'}`;
+      </div>`;
     div.querySelector('.budget-inp').addEventListener('change',e=>{
       const v=Math.max(0,parseInt(e.target.value)||0);e.target.value=v;
       BUDGETS[cat.id]=v;saveBudgets();renderAll();
@@ -974,6 +1142,38 @@ function renderBudget(catTot){
     });
     bl.appendChild(div);
   });
+  if(hiddenCats.length>0){
+    const sec=document.createElement('div');
+    sec.style.cssText='border-top:1px dashed var(--border);padding-top:12px;margin-top:4px;';
+    sec.innerHTML=`<div style="font-size:10px;font-weight:700;color:var(--muted2);letter-spacing:0.7px;text-transform:uppercase;margin-bottom:8px;">หมวดที่ซ่อนอยู่</div><div style="display:flex;flex-wrap:wrap;gap:7px;">${hiddenCats.map(c=>`<button onclick="restoreBudgetCat('${c.id}')" style="display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;border:1.5px dashed ${c.color};background:transparent;color:var(--text-secondary);font-family:var(--font-sans);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;" onmouseenter="this.style.background='${c.color}22'" onmouseleave="this.style.background='transparent'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="${c.color}" stroke-width="3"><path d="M5 12h14"/><path d="M12 5v14"/></svg>${esc(c.name)}</button>`).join('')}</div>`;
+    bl.appendChild(sec);
+  }
+  const addBtn=document.createElement('div');
+  addBtn.style.cssText='padding-top:10px;';
+  addBtn.innerHTML=`<button onclick="openCatManager()" style="display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px;font-weight:600;background:none;border:none;cursor:pointer;padding:8px 2px;font-family:var(--font-sans);" onmouseenter="this.style.color='var(--accent)'" onmouseleave="this.style.color='var(--muted)'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5v14"/></svg>เพิ่มหมวดหมู่ใหม่</button>`;
+  bl.appendChild(addBtn);
+  const donutEl=el('budget_donut');
+  if(donutEl){
+    const cats=allExpense().filter(c=>catTot[c.id]>0).sort((a,b)=>(catTot[b.id]||0)-(catTot[a.id]||0));
+    if(!cats.length){
+      donutEl.innerHTML='<div style="font-size:12px;color:var(--muted);text-align:center;padding:16px 0;">ยังไม่มีรายจ่ายเดือนนี้</div>';
+    }else{
+      const total=cats.reduce((s,c)=>s+(catTot[c.id]||0),0);
+      const cx=65,cy=65,r=48,sw=16,circ=2*Math.PI*r;
+      let segs='',accPx=0;
+      cats.forEach(cat=>{
+        const amt=catTot[cat.id]||0;
+        const fd=(amt/total)*circ;const dl=Math.max(0,fd-2);
+        segs+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${cat.color}" stroke-width="${sw}" stroke-dasharray="${dl.toFixed(2)} ${circ.toFixed(2)}" stroke-dashoffset="${(-accPx).toFixed(2)}"><title>${esc(cat.name)}: ฿${fmt(amt)}</title></circle>`;
+        accPx+=fd;
+      });
+      const legend=cats.slice(0,7).map(c=>{
+        const pct=Math.round((catTot[c.id]/total)*100);
+        return`<div style="display:flex;align-items:center;gap:6px;font-size:11px;margin-bottom:5px;"><div style="width:7px;height:7px;border-radius:2px;background:${c.color};flex-shrink:0;"></div><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(c.name)}</span><span style="font-family:var(--font-mono);font-weight:600;font-size:11px;">${pct}%</span></div>`;
+      }).join('');
+      donutEl.innerHTML=`<svg viewBox="0 0 130 130" style="width:120px;height:120px;display:block;margin:0 auto 12px;transform:rotate(-90deg);"><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--border)" stroke-width="${sw}"/>${segs}</svg>${legend}`;
+    }
+  }
 }
 
 // ── CATEGORY MANAGER ──
