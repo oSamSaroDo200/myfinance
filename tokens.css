@@ -1,0 +1,232 @@
+/* ═══════════════════════════════════════════════════════════
+   MyFinance Design Tokens — Pink Cat Theme
+   Three-layer: Primitive → Semantic → Component
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────
+   LAYER 1: PRIMITIVES  (raw values — change rarely)
+   ───────────────────────────────────────────────────────── */
+:root {
+  /* Pink scale */
+  --pink-50:  #FFF5F8;
+  --pink-100: #FFF0F5;
+  --pink-200: #FFE8F2;
+  --pink-300: #F5CCDA;
+  --pink-400: #EAA8BC;
+  --pink-500: #E8779A;
+  --pink-600: #D4547A;
+  --pink-500-a12: rgba(232,119,154,0.12);
+
+  /* Wine / plum (dark mode + text) */
+  --plum-50:  #FFE4EE;
+  --plum-100: #C08FAA;
+  --plum-200: #9B6B85;
+  --plum-300: #C0A0B0;
+  --plum-800: #3D1A2E;
+  --plum-850: #3D2033;
+  --plum-900: #321929;
+  --plum-925: #271220;
+  --plum-950: #1C0D18;
+  --plum-border-800: #4A2840;
+  --plum-border-700: #63364F;
+
+  /* Dark-mode pink accents */
+  --pink-dark-400: #F4A7B9;
+  --pink-dark-500: #E87EA0;
+  --pink-dark-a14: rgba(244,167,185,0.14);
+
+  /* Status palette */
+  --green-400: #66B891;  --green-300: #7DCCA0;
+  --red-400:   #E86D6D;  --red-300:   #F28585;
+  --yellow-400:#F0A850;  --yellow-300:#F5C476;
+  --blue-400:  #7EB3D8;  --blue-300:  #93C5E8;
+
+  /* Spacing (4px base grid) */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 10px;
+  --space-4: 12px;  --space-5: 14px;  --space-6: 16px;
+  --space-7: 18px;  --space-8: 22px;  --space-9: 24px;
+
+  /* Border radius */
+  --prim-radius-sm: 10px;
+  --prim-radius-md: 14px;
+  --prim-radius-lg: 18px;
+
+  /* Typography */
+  --font-sans: 'Prompt', 'Noto Emoji', sans-serif;
+  --font-mono: 'DM Mono', 'Noto Emoji', monospace;
+
+  /* Duration */
+  --dur-fast:   0.15s;
+  --dur-normal: 0.25s;
+  --dur-slow:   0.30s;
+}
+
+/* ─────────────────────────────────────────────────────────
+   LAYER 2: SEMANTIC  (purpose aliases — change for theming)
+   Light mode = default
+   ───────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:       var(--pink-50);
+  --surface:  #FFFFFF;
+  --surface2: var(--pink-100);
+  --surface3: var(--pink-200);
+
+  /* Borders */
+  --border:  var(--pink-300);
+  --border2: var(--pink-400);
+
+  /* Brand */
+  --accent:      var(--pink-500);
+  --accent2:     var(--pink-600);
+  --accent-glow: var(--pink-500-a12);
+
+  /* Status */
+  --green:  var(--green-400);
+  --red:    var(--red-400);
+  --yellow: var(--yellow-400);
+  --blue:   var(--blue-400);
+
+  /* Income / Expense semantic colors */
+  --income-fg:   #5CA87A;
+  --income-dot:  #8DC8AA;
+  --income-bg:   rgba(92,168,122,0.06);
+  --expense-fg:  #C43040;
+  --expense-dot: #C43040;
+  --expense-bg:  rgba(196,48,64,0.04);
+
+  /* Text hierarchy */
+  --text:            var(--plum-800);
+  --text-secondary:  rgba(61,26,46,0.68);
+  --muted:           var(--plum-200);
+  --muted2:          var(--plum-300);
+
+  /* Shadows (pink-tinted) */
+  --shadow-sm: 0 1px 6px rgba(200,80,120,0.08);
+  --shadow:    0 4px 18px rgba(200,80,120,0.11);
+  --shadow-lg: 0 14px 44px rgba(200,80,120,0.16);
+
+  /* Radius aliases */
+  --radius-sm: var(--prim-radius-sm);
+  --radius:    var(--prim-radius-md);
+  --radius-lg: var(--prim-radius-lg);
+
+  /* Layout */
+  --sb-width: 224px;
+}
+
+/* Dark mode — override semantic layer only */
+body.dark {
+  --bg:       var(--plum-950);
+  --surface:  var(--plum-925);
+  --surface2: var(--plum-900);
+  --surface3: var(--plum-850);
+  --border:   var(--plum-border-800);
+  --border2:  var(--plum-border-700);
+  --accent:      var(--pink-dark-400);
+  --accent2:     var(--pink-dark-500);
+  --accent-glow: var(--pink-dark-a14);
+  --green:  var(--green-300);
+  --red:    var(--red-300);
+  --yellow: var(--yellow-300);
+  --blue:   var(--blue-300);
+  --text:            var(--plum-50);
+  --text-secondary:  rgba(255,228,238,0.72);
+  --muted:           var(--plum-100);
+  --muted2:          #7A5070;
+  --income-fg:   #8DC8AA;
+  --income-dot:  #8DC8AA;
+  --income-bg:   rgba(141,200,170,0.07);
+  --expense-fg:  #E05060;
+  --expense-dot: #E05060;
+  --expense-bg:  rgba(224,80,96,0.06);
+  --shadow-sm: 0 1px 6px rgba(0,0,0,0.45);
+  --shadow:    0 4px 18px rgba(0,0,0,0.55);
+  --shadow-lg: 0 14px 44px rgba(0,0,0,0.7);
+}
+
+/* ─────────────────────────────────────────────────────────
+   LAYER 3: COMPONENT TOKENS  (per-component customization)
+   ───────────────────────────────────────────────────────── */
+:root {
+  /* ── Card ── */
+  --card-bg:           var(--surface);
+  --card-border:       var(--border);
+  --card-radius:       var(--radius);
+  --card-padding-x:    var(--space-7);
+  --card-padding-y:    var(--space-6);
+  --card-shadow-hover: var(--shadow);
+
+  /* ── Button: Primary ── */
+  --btn-primary-bg:       var(--accent);
+  --btn-primary-fg:       #fff;
+  --btn-primary-bg-hover: var(--accent2);
+  --btn-primary-shadow:   0 4px 14px rgba(232,119,154,0.45);
+  --btn-radius:           var(--radius-sm);
+
+  /* ── Button: Ghost ── */
+  --btn-ghost-border:       var(--border);
+  --btn-ghost-fg:           var(--text);
+  --btn-ghost-border-hover: var(--accent);
+  --btn-ghost-fg-hover:     var(--accent);
+
+  /* ── Input ── */
+  --input-bg:           var(--surface2);
+  --input-border:       var(--border);
+  --input-border-focus: var(--accent);
+  --input-ring-focus:   rgba(232,119,154,0.14);
+  --input-radius:       var(--radius-sm);
+  --input-padding:      9px 12px;
+
+  /* ── Sidebar / Nav ── */
+  --sidebar-bg:      var(--surface);
+  --sidebar-border:  var(--border);
+  --sidebar-width:   var(--sb-width);
+  --nav-active-bg:   var(--accent-glow);
+  --nav-active-fg:   var(--accent);
+  --nav-hover-bg:    rgba(232,119,154,0.07);
+
+  /* ── Stat Card ── */
+  --stat-bg:      var(--surface);
+  --stat-border:  var(--border);
+  --stat-radius:  var(--radius);
+  --stat-income:  var(--green);
+  --stat-expense: var(--red);
+  --stat-balance: var(--accent);
+  --stat-saving:  var(--yellow);
+
+  /* ── Progress Bar ── */
+  --progress-track:   var(--border);
+  --progress-fill:    var(--accent);
+  --progress-fill-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+  --progress-height:  5px;
+  --progress-radius:  3px;
+
+  /* ── Toast ── */
+  --toast-bg:     var(--surface);
+  --toast-border: var(--border);
+  --toast-radius: var(--radius-sm);
+  --toast-shadow: var(--shadow-lg);
+  --toast-ok:     var(--green);
+  --toast-err:    var(--red);
+  --toast-inf:    var(--accent);
+
+  /* ── Modal ── */
+  --modal-bg:       var(--surface);
+  --modal-border:   var(--border);
+  --modal-radius:   var(--radius-lg);
+  --modal-shadow:   var(--shadow-lg);
+  --modal-backdrop: rgba(61,26,46,0.6);
+
+  /* ── Donut Chart ── */
+  --donut-track: var(--border);
+  --donut-stroke-width: 18px;
+
+  /* ── Bottom Nav (mobile) ── */
+  --bnav-bg:     var(--surface);
+  --bnav-border: var(--border);
+  --bnav-active: var(--accent);
+  --bnav-muted:  var(--muted);
+  --bnav-fab-bg: linear-gradient(135deg, var(--accent), var(--accent2));
+  --bnav-fab-shadow: 0 4px 14px rgba(232,119,154,0.55);
+}
