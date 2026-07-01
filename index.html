@@ -20,7 +20,7 @@ button,a,[role="button"],select,input,label{touch-action:manipulation;}
 /* flex item must be allowed to shrink below its content's min-content
    size, otherwise un-shrinkable descendants (e.g. the topbar cluster)
    force this — and therefore html/body — wider than the viewport */
-.main{min-width:0;}
+.main{flex:1;min-width:0;}
 
 /* ── SIDEBAR ── */
 .sidebar{
